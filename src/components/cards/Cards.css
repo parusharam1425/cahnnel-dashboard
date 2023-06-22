@@ -59,4 +59,6 @@
     margin-bottom: 0;
     color: #6c757d;
   }
-  
+  .link{
+    text-decoration: none;
+  }

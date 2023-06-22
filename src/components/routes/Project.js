@@ -48,6 +48,7 @@ function Project() {
       setNewProject({
         title: '',
         department: '',
+        value:'',
         status: 'In Progress',
       });
       toggleAddingProject();
@@ -134,6 +135,18 @@ function Project() {
                 onChange={handleInputChange}
               />
             </div>
+
+            <div className="form-group">
+              <label htmlFor="value">Value:</label>
+              <input
+                type="number"
+                id="value"
+                name="value"
+                value={newProject.value}
+                onChange={handleInputChange}
+              />
+            </div>
+
             <div className="form-group">
               <label htmlFor="status">Status:</label>
               <select id="status" name="status" value={newProject.status} onChange={handleInputChange}>

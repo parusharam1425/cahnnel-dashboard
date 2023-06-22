@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import { FaClipboardList,FaRupeeSign } from 'react-icons/fa';
 import { IoIosPeople } from 'react-icons/io';
 import { AiFillProject } from 'react-icons/ai';
@@ -14,10 +15,11 @@ function Cards() {
     <div className="container-fluid">
       <div className="row">
         <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
+        <Link className='link' to="/customers">  
           <div className="card card-primary">
             <div className="card-body">
               <div className="card-content">
-                <h3 className="card-value">54</h3>
+                <h3 className="card-value">24</h3>
                 <p>Customers</p>
               </div>
               <div className="card-icon">
@@ -25,9 +27,10 @@ function Cards() {
               </div>
             </div>
           </div>
+      </Link>
         </div>
-
         <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
+        <Link className='link' to="/projects">  
           <div className="card card-success">
             <div className="card-body">
               <div className="card-content">
@@ -39,9 +42,11 @@ function Cards() {
               </div>
             </div>
           </div>
+          </Link>
         </div>
 
         <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
+        <Link className='link' to="/orders">  
           <div className="card card-info">
             <div className="card-body">
               <div className="card-content">
@@ -53,6 +58,7 @@ function Cards() {
               </div>
             </div>
           </div>
+        </Link>
         </div>
 
         <div className="col-lg-3 col-md-6 col-sm-6 mb-4">

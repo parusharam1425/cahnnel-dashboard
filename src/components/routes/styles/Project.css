@@ -66,13 +66,7 @@ margin-right: 0.7rem;
     height: 2.4rem;
     color: #fff;
   }
-  .add-button{
-    background-color: #3a9bdc;
-    border: 0px solid ;
-    border-radius: 6px;
-    height: 2.4rem;
-    color: #fff;
-  }
+ 
   td{
     font-size: 17px;
     font-weight: 600;
@@ -84,11 +78,13 @@ margin-right: 0.7rem;
     height: 10px;
     border-radius: 50%;
     margin-right: 5px;
+    
   }
   
   .in-progress {
     background-color: yellow;
   }
+  
   
   .completed {
     background-color: green;
