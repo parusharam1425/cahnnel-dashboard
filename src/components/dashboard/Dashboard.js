@@ -25,7 +25,9 @@ import Customers from '../routes/Customers';
 function Sidebar() {
   const location = useLocation();
   const { username } = location.state || { username: 'Guest' };
-
+  const [projectLength, setProjectLength] = useState('0')
+  const [customerLength, setCustomerLength] = useState('0')
+  const [income, setIncome] = useState('0')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -134,11 +136,11 @@ function Sidebar() {
               </li>
             </ul>
           </nav>
-          <Cards />
+          <Cards projectLength={projectLength} customerLength={customerLength} income={income} />
           <div className="row">
             <div className='col-md-12 col-lg-7'>
               <Routes>
-                <Route exact path="/projects" component={Project} />
+                <Route exact path="/projects" component={Project } />
               </Routes>
             </div>
             <div className='col-md-12 col-lg-7'>
@@ -147,11 +149,11 @@ function Sidebar() {
               </Routes>
             </div>
             <div className='col-md-12 col-lg-7'>
-              <Project/>
+              <Project setProjectLength={setProjectLength} setIncome={setIncome} />
             </div>
 
             <div className='col-md-12 col-lg-5'>
-              <Customers/>
+              <Customers setCustomerLength={setCustomerLength}/>
             </div>
           </div>
         </div>

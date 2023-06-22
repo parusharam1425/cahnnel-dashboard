@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BsArrowRight } from 'react-icons/bs';
 import './styles/Project.css';
 
-function Project() {
+function Project({setProjectLength, setIncome}) {
   const [showAll, setShowAll] = useState(false);
   const [projectDetails, setProjectDetails] = useState([]);
   const [isAddingProject, setIsAddingProject] = useState(false);
@@ -68,6 +68,7 @@ function Project() {
     try {
       const projectValue = parseFloat(newProject.value);
       const projectProfit = projectValue * 0.1;
+      setIncome(projectProfit)
       await axios.post('http://localhost:3001/projects', newProject);
       setNewProject({
         title: '',
@@ -94,15 +95,18 @@ function Project() {
       console.error(error);
     }
   };
-
   const projectDetailsLength = projectDetails.length;
+  setProjectLength(projectDetailsLength);
+
+
+
 
   return (
     <div className="project-container row">
       <div className="project-card">
         <div className="card-header">
           <h6 className="card-title">
-            Project Details <span className="length"> {projectDetailsLength}</span>
+            Project Details
           </h6>
           <button className="button" onClick={toggleShowAll}>
             {showAll ? 'Collapse' : 'See All'} <BsArrowRight className="arrow" />

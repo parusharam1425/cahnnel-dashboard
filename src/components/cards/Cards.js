@@ -10,7 +10,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import './Cards.css';
 
-function Cards() {
+function Cards({projectLength, customerLength, income}) {
   return (
     <div className="container-fluid">
       <div className="row">
@@ -19,7 +19,7 @@ function Cards() {
           <div className="card card-primary">
             <div className="card-body">
               <div className="card-content">
-                <h3 className="card-value">24</h3>
+                <h3 className="card-value">{customerLength}</h3>
                 <p>Customers</p>
               </div>
               <div className="card-icon">
@@ -34,7 +34,7 @@ function Cards() {
           <div className="card card-success">
             <div className="card-body">
               <div className="card-content">
-                <h3 className="card-value">79</h3>
+                <h3 className="card-value">{projectLength}</h3>
                 <p>Projects</p>
               </div>
               <div className="card-icon">
@@ -65,7 +65,7 @@ function Cards() {
           <div className="card card-danger">
             <div className="card-body">
               <div className="card-content">
-                <h3 className="card-value"><FaRupeeSign size={25}/>16</h3>
+                <h3 className="card-value"><FaRupeeSign size={25}/>{income}</h3>
                 <p>Income</p>
               </div>
               <div className="card-icon">

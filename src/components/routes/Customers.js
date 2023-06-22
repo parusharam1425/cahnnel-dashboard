@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BsArrowRight, BsPhone, BsChat, BsPerson, BsTrash } from 'react-icons/bs';
-import {FcBusinessman} from 'react-icons/fc'
+import { FcBusinessman } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './styles/Customer.css';
 
-const Customers = () => {
+const Customers = ({setCustomerLength}) => {
   const [showAll, setShowAll] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newCustomer, setNewCustomer] = useState({
@@ -124,10 +124,13 @@ const Customers = () => {
   const getDefaultUserIcon = () => {
     return (
       <div className="default-user-icon">
-        <FcBusinessman size={33}/>
+        <FcBusinessman size={33} />
       </div>
     );
   };
+
+  const customerCount = customerList.length;
+  setCustomerLength(customerCount)
 
   return (
     <div className="customer-container row">
