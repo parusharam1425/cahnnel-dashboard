@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { BsArrowRight, BsPhone, BsChat, BsPerson, BsTrash } from 'react-icons/bs';
+import {FcBusinessman} from 'react-icons/fc'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './styles/Customer.css';
 
-
 const Customers = () => {
-
   const [showAll, setShowAll] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [newCustomer, setNewCustomer] = useState(() => {
-  const savedCustomer = localStorage.getItem('newCustomer');
-    return savedCustomer
-      ? JSON.parse(savedCustomer)
-      : {
-          id: null,
-          name: '',
-          title: '',
-          imgSrc: '',
-          age: null,
-          email: '',
-          phone: '',
-          address: '',
-        };
+  const [newCustomer, setNewCustomer] = useState({
+    id: null,
+    name: '',
+    title: '',
+    imgSrc: null,
+    age: null,
+    email: '',
+    phone: '',
+    address: '',
   });
   const [customerList, setCustomerList] = useState([]);
 
@@ -58,13 +52,12 @@ const Customers = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setNewCustomer({ ...newCustomer, [name]: value });
+    setNewCustomer((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    const blob = new Blob([file], { type: file.type });
-    setNewCustomer((prevState) => ({ ...prevState, imgSrc: blob }));
+    setNewCustomer((prevState) => ({ ...prevState, imgSrc: file }));
   };
 
   const addCustomer = () => {
@@ -101,7 +94,7 @@ const Customers = () => {
           id: null,
           name: '',
           title: '',
-          imgSrc: '',
+          imgSrc: null,
           age: null,
           email: '',
           phone: '',
@@ -128,6 +121,14 @@ const Customers = () => {
       });
   };
 
+  const getDefaultUserIcon = () => {
+    return (
+      <div className="default-user-icon">
+        <FcBusinessman size={33}/>
+      </div>
+    );
+  };
+
   return (
     <div className="customer-container row">
       <div className="project-card">
@@ -142,7 +143,11 @@ const Customers = () => {
           {displayedCustomers.map((customer) => (
             <div className="customer" key={customer.id}>
               <Link to={`/customers/${customer.id}`}>
-                <img src={customer.imgSrc} alt={`Customer ${customer.id}`} className="customer-img" />
+                {customer.imgSrc ? (
+                  <img src={customer.imgSrc} alt={`Customer ${customer.id}`} className="customer-img" />
+                ) : (
+                  getDefaultUserIcon()
+                )}
               </Link>
               <div className="customer-details">
                 <h4 className="customer-name">
@@ -198,7 +203,7 @@ const Customers = () => {
               type="number"
               name="age"
               placeholder="Age"
-              value={newCustomer.age}
+              value={newCustomer.age || ''}
               onChange={handleInputChange}
             />
             <input

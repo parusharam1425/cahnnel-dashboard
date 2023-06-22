@@ -80,6 +80,41 @@ app.delete('/projects/:id', (req, res) => {
 });
 
 
+//customer details
+
+app.post('/customers', (req, res) => {
+  user_data.addCustomer(req.body)
+    .then(response => {
+      res.status(200).send(response);
+
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    })
+})
+
+app.get('/customers', (req, res) => {
+  user_data.getCustomer()
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    })
+})
+
+app.delete('/customers/:id', (req, res) => {
+  const userID = req.params.id;
+  user_data.deleteCustomer(userID)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    });
+});
+
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
 })

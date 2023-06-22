@@ -13,11 +13,16 @@ function Project() {
     status: 'In Progress',
   });
   const [profits, setProfits] = useState([]);
-  const [showProfitDetails, setShowProfitDetails] = useState(false); // State variable for controlling profit details pop-up
+  const [showProfitDetails, setShowProfitDetails] = useState(false);
 
   useEffect(() => {
     fetchProjects();
+    fetchProfits();
   }, []);
+
+  useEffect(() => {
+    saveProfits();
+  }, [profits]);
 
   const fetchProjects = async () => {
     try {
@@ -26,6 +31,17 @@ function Project() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const fetchProfits = () => {
+    const storedProfits = localStorage.getItem('profits');
+    if (storedProfits) {
+      setProfits(JSON.parse(storedProfits));
+    }
+  };
+
+  const saveProfits = () => {
+    localStorage.setItem('profits', JSON.stringify(profits));
   };
 
   const toggleShowAll = () => {
@@ -130,7 +146,9 @@ function Project() {
           <button className="add-button m-3" onClick={toggleAddingProject}>
             Add Project
           </button>
-          <button className="add-button" onClick={toggleProfitDetails}>Profit</button>
+          <button className="add-button" onClick={toggleProfitDetails}>
+            Profit
+          </button>
         </div>
       </div>
 
@@ -140,7 +158,13 @@ function Project() {
             <h2>Add New Project</h2>
             <div className="form-group">
               <label htmlFor="title">Project Title:</label>
-              <input type="text" id="title" name="title" value={newProject.title} onChange={handleInputChange} />
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={newProject.title}
+                onChange={handleInputChange}
+              />
             </div>
             <div className="form-group">
               <label htmlFor="department">Department:</label>
@@ -166,7 +190,12 @@ function Project() {
 
             <div className="form-group">
               <label htmlFor="status">Status:</label>
-              <select id="status" name="status" value={newProject.status} onChange={handleInputChange}>
+              <select
+                id="status"
+                name="status"
+                value={newProject.status}
+                onChange={handleInputChange}
+              >
                 <option value="In Progress">In Progress</option>
                 <option value="Completed">Completed</option>
               </select>
@@ -183,7 +212,6 @@ function Project() {
         </div>
       )}
 
-      {/* Display individual project profits */}
       {showProfitDetails && profits.length > 0 && (
         <div className="profit-details-popup">
           <div className="profit-details-content">
