@@ -12,6 +12,8 @@ function Project() {
     department: '',
     status: 'In Progress',
   });
+  const [profits, setProfits] = useState([]);
+  const [showProfitDetails, setShowProfitDetails] = useState(false); // State variable for controlling profit details pop-up
 
   useEffect(() => {
     fetchProjects();
@@ -34,6 +36,10 @@ function Project() {
     setIsAddingProject(!isAddingProject);
   };
 
+  const toggleProfitDetails = () => {
+    setShowProfitDetails(!showProfitDetails);
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setNewProject((prevState) => ({
@@ -44,13 +50,19 @@ function Project() {
 
   const addProject = async () => {
     try {
+      const projectValue = parseFloat(newProject.value);
+      const projectProfit = projectValue * 0.1;
       await axios.post('http://localhost:3001/projects', newProject);
       setNewProject({
         title: '',
         department: '',
-        value:'',
+        value: '',
         status: 'In Progress',
       });
+      setProfits((prevProfits) => [
+        ...prevProfits,
+        { title: newProject.title, profit: projectProfit },
+      ]);
       toggleAddingProject();
       fetchProjects();
     } catch (error) {
@@ -97,7 +109,11 @@ function Project() {
                   <td>{project.department}</td>
                   <td>{project.value}</td>
                   <td>
-                    <span className={`status-indicator ${project.status === 'Completed' ? 'completed' : 'in-progress'}`} />
+                    <span
+                      className={`status-indicator ${
+                        project.status === 'Completed' ? 'completed' : 'in-progress'
+                      }`}
+                    />
                     {project.status}
                   </td>
                   <td>
@@ -111,9 +127,10 @@ function Project() {
           </table>
         </div>
         <div className="add-button-container">
-          <button className="add-button" onClick={toggleAddingProject}>
+          <button className="add-button m-3" onClick={toggleAddingProject}>
             Add Project
           </button>
+          <button className="add-button" onClick={toggleProfitDetails}>Profit</button>
         </div>
       </div>
 
@@ -158,10 +175,29 @@ function Project() {
               <button className="btn btn-primary" onClick={addProject}>
                 Add
               </button>
-              <button className="btn btn-secondary" onClick={toggleAddingProject}>
+              <button className="btn btn-primary" onClick={toggleAddingProject}>
                 Cancel
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Display individual project profits */}
+      {showProfitDetails && profits.length > 0 && (
+        <div className="profit-details-popup">
+          <div className="profit-details-content">
+            <h3>Profit Details</h3>
+            <ul>
+              {profits.map((project) => (
+                <li key={project.title}>
+                  <strong>{project.title}:</strong> {project.profit}
+                </li>
+              ))}
+            </ul>
+            <button className="btn btn-secondary" onClick={toggleProfitDetails}>
+              Close
+            </button>
           </div>
         </div>
       )}

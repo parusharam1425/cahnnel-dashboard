@@ -5,13 +5,13 @@ import axios from 'axios';
 
 import './styles/Customer.css';
 
-import RImage from './assects/image-user.jpg';
 
 const Customers = () => {
+
   const [showAll, setShowAll] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newCustomer, setNewCustomer] = useState(() => {
-    const savedCustomer = localStorage.getItem('newCustomer');
+  const savedCustomer = localStorage.getItem('newCustomer');
     return savedCustomer
       ? JSON.parse(savedCustomer)
       : {
