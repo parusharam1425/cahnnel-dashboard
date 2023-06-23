@@ -13,7 +13,6 @@ import {
 import { RiAccountCircleFill } from 'react-icons/ri';
 import { AiOutlineUser, AiFillProject } from 'react-icons/ai';
 import { FcBusinessman } from 'react-icons/fc';
-import { BiUser } from 'react-icons/bi';
 
 import Matrical from '../../components/routes/assects/matrical.jpeg';
 

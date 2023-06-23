@@ -6,7 +6,6 @@ import Register from './components/login/Register';
 import Data from './components/login/Data';
 import Project from './components/routes/Project';
 import Customers from './components/routes/Customers';
-import CustomerDetails from './components/routes/CustomerDetails';
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
           <Route path="/projects" element={<Project />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/data" element={<Data />} />
-          <Route path="/customers/:id" render={(props) => <CustomerDetails {...props} customersData={CustomerDetails} />} />
         </Routes>
       </Router>
     </div>

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BsArrowRight } from 'react-icons/bs';
 import './styles/Project.css';
 
-function Project({setProjectLength, setIncome}) {
+function Project({ setProjectLength, setIncome }) {
   const [showAll, setShowAll] = useState(false);
   const [projectDetails, setProjectDetails] = useState([]);
   const [isAddingProject, setIsAddingProject] = useState(false);
@@ -15,22 +15,19 @@ function Project({setProjectLength, setIncome}) {
   const [profits, setProfits] = useState([]);
   const [showProfitDetails, setShowProfitDetails] = useState(false);
 
-  useEffect(() => {
-    fetchProjects();
-    fetchProfits();
-  }, []);
-
-  useEffect(() => {
-    saveProfits();
-  }, [profits]);
-
   const fetchProjects = async () => {
     try {
       const response = await axios.get('http://localhost:3001/projects');
-      setProjectDetails(response.data);
+      const projects = response.data;
+      setProjectDetails(projects);
+      saveProjectsToLocalStorage(projects);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const saveProjectsToLocalStorage = (projects) => {
+    localStorage.setItem('projects', JSON.stringify(projects));
   };
 
   const fetchProfits = () => {
@@ -43,6 +40,20 @@ function Project({setProjectLength, setIncome}) {
   const saveProfits = () => {
     localStorage.setItem('profits', JSON.stringify(profits));
   };
+
+  useEffect(() => {
+    const storedProjects = localStorage.getItem('projects');
+    if (storedProjects) {
+      setProjectDetails(JSON.parse(storedProjects));
+    } else {
+      fetchProjects();
+    }
+    fetchProfits();
+  }, []);
+
+  useEffect(() => {
+    saveProfits();
+  }, [profits]);
 
   const toggleShowAll = () => {
     setShowAll(!showAll);
@@ -68,7 +79,7 @@ function Project({setProjectLength, setIncome}) {
     try {
       const projectValue = parseFloat(newProject.value);
       const projectProfit = projectValue * 0.1;
-      setIncome(projectProfit)
+      setIncome(projectProfit);
       await axios.post('http://localhost:3001/projects', newProject);
       setNewProject({
         title: '',
@@ -95,19 +106,15 @@ function Project({setProjectLength, setIncome}) {
       console.error(error);
     }
   };
+
   const projectDetailsLength = projectDetails.length;
   setProjectLength(projectDetailsLength);
-
-
-
 
   return (
     <div className="project-container row">
       <div className="project-card">
         <div className="card-header">
-          <h6 className="card-title">
-            Project Details
-          </h6>
+          <h6 className="card-title">Project Details</h6>
           <button className="button" onClick={toggleShowAll}>
             {showAll ? 'Collapse' : 'See All'} <BsArrowRight className="arrow" />
           </button>

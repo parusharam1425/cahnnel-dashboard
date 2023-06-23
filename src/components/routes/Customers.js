@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BsArrowRight, BsPhone, BsChat, BsPerson, BsTrash } from 'react-icons/bs';
 import { FcBusinessman } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './styles/Customer.css';
 
-const Customers = ({setCustomerLength}) => {
+const Customers = ({ setCustomerLength }) => {
   const [showAll, setShowAll] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newCustomer, setNewCustomer] = useState({
@@ -20,6 +19,7 @@ const Customers = ({setCustomerLength}) => {
     address: '',
   });
   const [customerList, setCustomerList] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
 
   useEffect(() => {
     // Fetch customer data from the API
@@ -130,7 +130,7 @@ const Customers = ({setCustomerLength}) => {
   };
 
   const customerCount = customerList.length;
-  setCustomerLength(customerCount)
+  setCustomerLength(customerCount);
 
   return (
     <div className="customer-container row">
@@ -145,13 +145,13 @@ const Customers = ({setCustomerLength}) => {
         <div className="customer-info">
           {displayedCustomers.map((customer) => (
             <div className="customer" key={customer.id}>
-              <Link to={`/customers/${customer.id}`}>
+              <div onClick={() => setSelectedCustomer(customer)}>
                 {customer.imgSrc ? (
                   <img src={customer.imgSrc} alt={`Customer ${customer.id}`} className="customer-img" />
                 ) : (
                   getDefaultUserIcon()
                 )}
-              </Link>
+              </div>
               <div className="customer-details">
                 <h4 className="customer-name">
                   {customer.name}
@@ -241,6 +241,39 @@ const Customers = ({setCustomerLength}) => {
           </div>
         </div>
       )}
+
+{selectedCustomer && (
+  <div className="customer-details-popup">
+    <div className="popup-content">
+      <div className="customer-details-header">
+        <h4 className="customer-name">{selectedCustomer.name}</h4>
+        <span className="span-name">{selectedCustomer.title}</span>
+      </div>
+      <div className="customer-details-info">
+        <div className="detail">
+          <span className="detail-label">Age:</span>
+          <span className="detail-value">{selectedCustomer.age}</span>
+        </div>
+        <div className="detail">
+          <span className="detail-label">Email:</span>
+          <span className="detail-value">{selectedCustomer.email}</span>
+        </div>
+        <div className="detail">
+          <span className="detail-label">Phone:</span>
+          <span className="detail-value">{selectedCustomer.phone}</span>
+        </div>
+        <div className="detail">
+          <span className="detail-label">Address:</span>
+          <span className="detail-value">{selectedCustomer.address}</span>
+        </div>
+      </div>
+      <button className="btn btn-secondary" onClick={() => setSelectedCustomer(null)}>
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
