@@ -49,7 +49,7 @@ function Project({ setProjectLength, setIncome }) {
       fetchProjects();
     }
     fetchProfits();
-  }, []);
+  }, [profites]);
 
   useEffect(() => {
     saveProfits();
